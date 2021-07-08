@@ -1,78 +1,119 @@
-canvas = document.getElementById('mycanvas');
-ctx = canvas.getContext("2d");
+var canvas = new fabric.Canvas('myCanvas'); 
 
-nasa_mars_image_array = ["mars 1.jpg","mars 2.jpg","mars 3.jpg","mars 4.jpg"];
+player_x = 10; 
+player_y = 10; 
 
-random_number = Math.floor(Math.random() * 4);
+block_image_width = 30; 
+block_image_height = 30; 
 
-console.log(random number);
-rover_widht = 100;
-rover_height = 90;
+var player_object= ""; 
+var block_image_object= ""; 
 
-background_image = nasa_mars_image_array[random_number];
-console.log("background_image =" + background_image);
-rover_image = "rover.png";
+function player_update() 
+{ fabric.Image.fromURL("player.png", function(Img) 
+{ player_object = Img; 
+    player_object.scaleToWidth(150); 
+    player_object.scaleToHeight(140); 
+    player_object.set({ top:player_y, left:player_x }); 
+    canvas.add(player_object); 
+}); 
+} 
 
-rover_image = "rover.png";
-
-rover_x = 10;
-rover_y = 10;
-
-function add() 
-{ 
-    background_imgTag = new Image(); //defining a variable with a 
-    background_imgTag.onload = uploadBackground; // setting a function, onloading this variable 
-    background_imgTag.src = background_image; // load image rover_imgTag = new Image(); //defining a variable with a new image 
-    rover_imgTag.onload = uploadrover; // setting a function, onloading this variable 
-    rover_imgTag.src = rover_image; // load image
- }
-function uploadBackground(){
-    ctx.drawImage(background_imgTag, 0, 0, canvas.widht, canvas.height);
-}
-
-function uploadrover(){
-    ctx.drawImage(rover_image, rover_x, rover_y, rover_widht, rover_height);
+function new_image(get_image) 
+{ fabric.Image.fromURL(get_image, function(Img) 
+    { block_image_object = Img; 
+        block_image_object.scaleToWidth(block_image_width); 
+        block_image_object.scaleToHeight(block_image_height); 
+        block_image_object.set({ top:player_y, left:player_x }); 
+        canvas.add(block_image_object); 
+    }); 
 }
 
 window.addEventListener("keydown", my_keydown);
 
 function my_keydown(e)
 {
-    keyPressed = e.keyCode;
-    console.log(keyPressed);
-    if(keyPressed == '38')
+    keypressed = e.keycode;
+    console.log(keypressed);
+    if(shiftKey == true && keypressed == '80')
+    {
+        console.log("p and shift are pressed together");
+        block_image_width = block_image_width + 10;
+        block_image_height = block_image_height + 10;
+        document.getElementById("current widht").innerHTML = block_image_width;
+        document.getElementById("curren height").innerHTML = block_image_height;
+    }
+    if(e.shiftKey && keypressed == '77')
+    {
+        console.log("m and shift are pressed together");
+        block_image_width = block_image_width + 10;
+        block_image_height = block_image_height + 10;
+        document.getElementById("current widht").innerHTML = block_image_width;
+        document.getElementById("current height").innerHTML = block_image_height;
+    }
+    if(keypressed == '38')
     {
         up();
         console.log("up");
     }
-    if(keyPressed == '40')
+    if(keypressed == '40')
     {
         down();
         console.log("down");
     }
-    if(keyPressed == '37');
+    if(keypressed == '37')
     {
-        left();
+        left()
         console.log("left");
     }
-    if(keyPressed == '39');
+    if(keypressed == '39')
     {
         right();
-        console.log("right");
+        console.log("right")
+    }
+    if(keypressed == '87')
+    {
+        new_image('wall.jpg');
+        console.log("w");
+    }
+    if(keypressed == '71')
+    {
+        new_image('ground.png');
+        console.log("g");
+    }
+    if(keypressed == '76')
+    {
+        new_image('light_green.png');
+        console.log("l");
+    }
+    if(keypressed == '84')
+    {
+        new_image('trunk.png');
+        console.log("t");
+    }
+    if(keypressed == '82')
+    {
+        new_image('roof.jpg');
+        console.log("r");
+    }
+    if(keypressed == '89')
+    {
+        new_image('yellow_wall.png');
+        console.log("y");
+    }
+    if(keypressed == '68')
+    {
+        new_image('dark_green.png');
+        console.log("d");
+    }
+    if(keypressed == '85')
+    {
+        new_image('different.png');
+        console.log("u");
+    }
+    if(keypressed == '67')
+    {
+        new_image('cloud.jpg');
+        console.log("c");
     }
 }
-    function up() 
-    { if(rover_y >=0) 
-        { rover_y = rover_y - 10; console.log("When up arrow is pressed, x = " + rover_x + " | y = " +rover_y); uploadBackground(); uploadrover(); } } 
-
-    function down() 
-    { if(rover_y <=500) 
-        { rover_y =rover_y+ 10; console.log("When down arrow is pressed, x = " + rover_x + " | y = " +rover_y); uploadBackground(); uploadrover(); } } 
-
-    function left() 
-    { if(rover_x >= 0) 
-        { rover_x =rover_x - 10; console.log("When left arrow is pressed, x = " + rover_x + " | y = " +rover_y); uploadBackground(); uploadrover(); } } 
-        
-    function right() 
-    { if(rover_x <= 700) 
-        { rover_x =rover_x + 10; console.log("When right arrow is pressed, x = " + rover_x + " | y = " +rover_y); uploadBackground(); uploadrover(); } }
